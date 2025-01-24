@@ -11,7 +11,7 @@ public class App
         int age =30;
         try{
             checkAge(age);
-        }catch (AgeValidatorException e){
+        }catch (PrashantAgeValidatorException e){
             e.printStackTrace();
             System.out.println(e.getMessage());
         }finally{
@@ -21,9 +21,9 @@ public class App
 
     }
 
-    public static void checkAge (int age)throws AgeValidatorException{
+    public static void checkAge (int age)throws PrashantAgeValidatorException{
         if(age<25){
-            throw new AgeValidatorException();
+            throw new PrashantAgeValidatorException();
         }else{
             System.out.println("Valid age");
         }
