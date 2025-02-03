@@ -1,5 +1,6 @@
 package com.prashant.app.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,19 +19,33 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class AppSecurityConfig {
 
+    @Value("${doctor.name}")
+    private String doctorUserName;
+    @Value("${doctor.password}")
+    private String doctorPassword;
+    @Value("${doctor.role}")
+    private String doctorRole;
+
+    @Value("${patient.name}")
+    private String patientUserName;
+    @Value("${patient.password}")
+    private String patientPassword;
+    @Value("${patient.role}")
+    private String patientRole;
+
     @Bean
     public UserDetailsService userDetailsService(){
 
-        UserDetails doctor = User.withUsername("doctor")
+        UserDetails doctor = User.withUsername(doctorUserName)
                 .password(passwordEncoder()
-                        .encode("Doctor_Password"))
-                .roles("DOCTOR")
+                        .encode(doctorPassword))
+                .roles(doctorRole)
                 .build();
 
-        UserDetails patient = User.withUsername("patient")
+        UserDetails patient = User.withUsername(patientUserName)
                 .password(passwordEncoder()
-                        .encode("Password_Patient"))
-                .roles("PATIENT")
+                        .encode(patientPassword))
+                .roles(patientRole)
                 .build();
         return new InMemoryUserDetailsManager(doctor,patient);
     }
