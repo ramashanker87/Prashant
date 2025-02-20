@@ -33,7 +33,7 @@ param - vehicleNumber : CG-2321
 ### By default, Vehicle is running in INFO logging mode and Owner is running in DEBUG logging mode 
 
 #### To change Vehicle from INFO to DEBUG
-curl -X POST "http://localhost:8080/actuator/loggers/com.prashant.app.module.Vehicle" -H "Content-Type: application/json" -d '{"configuredLevel": "DEBUG"}'
+curl.exe -X POST "http://localhost:8080/actuator/loggers/com.prashant.app.module.Vehicle" -H "Content-Type: application/json" -d '{"configuredLevel": "DEBUG"}'
 
 Or 
 ##### from powerShell
