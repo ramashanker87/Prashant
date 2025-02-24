@@ -24,14 +24,14 @@
 
     curl  "<ALB-DNS-Name>/actuator/health/"
 
-    curl  "http://PrashantMicroserviceALB-361811136.us-east-1.elb.amazonaws.com/actuator/health/"
+    curl  "http://PrashantMicroserviceALB-610726130.us-east-1.elb.amazonaws.com/actuator/health/"
 
 ### Test application using load balancer
-    http://MicroserviceALB-929833956.us-east-1.elb.amazonaws.com/swagger-ui/index.html#
-    curl -X GET "http://MicroserviceALB-929833956.us-east-1.elb.amazonaws.com/addition?a=9&b=5"
-    curl -X GET "http://MicroserviceALB-929833956.us-east-1.elb.amazonaws.com/substraction?a=9&b=5"
-    curl -X POST "http://MicroserviceALB-929833956.us-east-1.elb.amazonaws.com/multiplication?a=9&b=5"
-    curl -X PUT "http://MicroserviceALB-929833956.us-east-1.elb.amazonaws.com/division?a=9&b=5"
+    http://PrashantMicroserviceALB-610726130.us-east-1.elb.amazonaws.com/swagger-ui/index.html#
+    curl -X GET "http://PrashantMicroserviceALB-610726130.us-east-1.elb.amazonaws.comaddition?a=9&b=5"
+    curl -X GET "http://PrashantMicroserviceALB-610726130.us-east-1.elb.amazonaws.comsubstraction?a=9&b=5"
+    curl -X POST "http://PrashantMicroserviceALB-610726130.us-east-1.elb.amazonaws.commultiplication?a=9&b=5"
+    curl -X PUT "http://PrashantMicroserviceALB-610726130.us-east-1.elb.amazonaws.comdivision?a=9&b=5"
 
 ## Create ECS Service and Task infra
 

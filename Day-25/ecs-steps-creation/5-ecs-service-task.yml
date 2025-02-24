@@ -56,7 +56,7 @@ Resources:
     Properties:
       ServiceName: 'calculator-service'
       Cluster: !ImportValue PrashantEcsClusterTraining
-      DesiredCount: 2
+      DesiredCount: 1
       LaunchType: FARGATE
       TaskDefinition: !Ref FargateTaskDefinition
       NetworkConfiguration:
@@ -68,7 +68,7 @@ Resources:
           SecurityGroups:
             - !ImportValue PrashantServiceSecurityGroupId
       LoadBalancers:
-        - TargetGroupArn: !ImportValue ALBTargetGroupId
+        - TargetGroupArn: !ImportValue PrashantALBTargetGroupId
           ContainerName: "calculator-app"
           ContainerPort: 8080
 

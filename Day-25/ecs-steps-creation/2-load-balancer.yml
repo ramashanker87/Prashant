@@ -70,7 +70,7 @@ Outputs:
     Value: !Ref ALB
     Export:
       Name: 'ALBArnPrashant'
-  ALBTargetGroupId:
+  PrashantALBTargetGroupId:
     Description: 'ALB Target Group ID'
     Value: !Ref ALBTargetGroup
     Export:
