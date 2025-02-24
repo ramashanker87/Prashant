@@ -18,6 +18,7 @@ public class ParkingStart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
     private String parkingNo;
 
     private LocalDateTime startTime;

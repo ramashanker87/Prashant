@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class ParkingService {
 
@@ -36,13 +39,20 @@ public class ParkingService {
         return new Jackson2JsonMessageConverter();
     }
 
-    public String parkingStartService(Car car, String parkingNumber){
-        //this will send data to Queue -> parking-start-request  then from queue to car-parking-process module
-        //rabbitMQ for Queue
+    public String parkingStartService(Car car, String parkingNumber) {
         logger.info("Acquiring parking number " + parkingNumber);
-        producerAmqpTemplate.convertAndSend(exchangeName, startRequestRoutingKeyName, car);
+
+        // Create a Map message
+        Map<String, Object> message = new HashMap<>();
+        message.put("car", car);
+        message.put("parkingNumber", parkingNumber);
+
+        // Send message to RabbitMQ queue
+        producerAmqpTemplate.convertAndSend(exchangeName, startRequestRoutingKeyName, message);
+
         return "Parking is starting...";
     }
+
 
     public String parkingEndService( String parkingNumber){
         logger.info("releasing parking number " + parkingNumber);
