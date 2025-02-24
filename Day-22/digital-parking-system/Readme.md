@@ -24,4 +24,17 @@ now we can see the data in start queue
 ### now start the process application 
 
 DELETE  http://localhost:8082/parking/end
-parkingNumber park1
+param - parkingNumber : 1-A
+
+### To check data in mysql
+docker exec -it mysql mysql -u user -p
+
+password
+
+use parking;
+
+select * from car;
+select * from parking_start;
+select * from parking_end;
+
+

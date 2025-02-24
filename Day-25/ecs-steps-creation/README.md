@@ -42,3 +42,6 @@
 
     aws cloudformation delete-stack \
         --stack-name create-ecs-cluster-infra \
+
+        aws cloudformation delete-stack --stack-name prashant-security-group-infra
+
