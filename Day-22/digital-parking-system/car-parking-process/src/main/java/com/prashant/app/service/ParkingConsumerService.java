@@ -14,7 +14,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -49,48 +48,12 @@ public class ParkingConsumerService {
     private String endResponseRoutingKeyName;
 
     // Listen to parking-start-request Queue
-//    @RabbitListener(queues = "${rabbitmq.start.request.queue.name}")
-//    @RabbitListener(queues = "${rabbitmq.start.request.queue.name}")
-//    public void processStartRequest(Map<String, Object> message) {
-//        // Extract values from the map
-//        Car car = (Car) message.get("car");
-//        String parkingNumber = (String) message.get("parkingNumber");
-//
-//        if (car == null || parkingNumber == null) {
-//            logger.error("Invalid message received: " + message);
-//            return;
-//        }
-//
-//        logger.info("Processing parking start request for car: " + car + " at parking number: " + parkingNumber);
-//
-//        // Save car details
-//        carRepository.save(car);
-//
-//        // Save parking start details
-//        ParkingStart start = new ParkingStart();
-//        start.setStartTime(LocalDateTime.now());
-//        start.setRegistrationNo(car.getRegistrationNumber());
-//        start.setStatus("PARKED");
-//        start.setParkingNo(parkingNumber);
-//
-//        parkingStartRepository.save(start);
-//
-//        // Prepare response message
-//        String responseMessage = "Response - Hello " + car.getOwnerName() + ", your car " +
-//                car.getRegistrationNumber() + " is parked successfully at " + start.getStartTime();
-//
-//        // Send response message to the response queue
-//        consumerAmqpTemplate.convertAndSend(exchangeName, startResponseRoutingKeyName, responseMessage);
-//    }
-
-
-
     @RabbitListener(queues = "${rabbitmq.start.request.queue.name}")
     public void processStartRequest(Map<String, Object> message) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
-            // Extract car object correctly
+            // Extract car object
             Car car = objectMapper.convertValue(message.get("car"), Car.class);
             String parkingNumber = (String) message.get("parkingNumber");
 
@@ -113,7 +76,7 @@ public class ParkingConsumerService {
 
             parkingStartRepository.save(start);
 
-            // Prepare response message
+            // response message
             String responseMessage = "Response - Hello " + car.getOwnerName() + ", your car " +
                     car.getRegistrationNumber() + " is parked successfully at " + start.getStartTime();
 
