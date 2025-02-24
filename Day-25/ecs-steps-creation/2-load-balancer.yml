@@ -47,7 +47,7 @@ Resources:
       VpcId: !ImportValue VPCId
       TargetType: ip
       HealthCheckProtocol: HTTP
-      HealthCheckPath: "/actuator/health"
+      HealthCheckPath: "/actuator/health/"
       HealthCheckIntervalSeconds: 30
 
 #########################################################################################################
