@@ -1,22 +1,34 @@
 package com.prashant.app.service;
 
 import com.prashant.app.module.Car;
+import com.prashant.app.module.ParkingStart;
+import com.prashant.app.repository.CarRepository;
+import com.prashant.app.repository.ParkingStartRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class ParkingConsumerService {
+    @Autowired
+    private CarRepository carRepository;
+    @Autowired
+    private ParkingStartRepository parkingStartRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ParkingConsumerService.class);
 
     private final AmqpTemplate consumerAmqpTemplate;
 
-    public ParkingConsumerService(AmqpTemplate consumerAmqpTemplate) {
+
+    public ParkingConsumerService(AmqpTemplate consumerAmqpTemplate, CarRepository carRepository) {
         this.consumerAmqpTemplate = consumerAmqpTemplate;
+
     }
 
     @Value("${rabbitmq.exchange.name}")
@@ -32,10 +44,20 @@ public class ParkingConsumerService {
     @RabbitListener(queues = "${rabbitmq.start.request.queue.name}")
     public void processStartRequest(Car car) {
         logger.info("Processing parking start request for car: " + car);
+        //save the details in DB for car and parking start table
+        carRepository.save(car);
+
+        //save in parking start table
+        ParkingStart start = new ParkingStart();
+        start.setStartTime(LocalDateTime.now());
+        start.setRegistrationNo(car.getRegistrationNumber());
+        start.setStatus("PARKED");
+
+        parkingStartRepository.save(start);
 
         // Simulating processing logic
-        String responseMessage = "Response - Parking started for car : " + car;
-
+        String responseMessage = "Response - Hello "+ car.getOwnerName()+" your car "+car.getRegistrationNumber() +"is parked successfully at "+start.getStartTime() ;
+        //String responseMessage = "Response ";
         // Send response message to parking-start-response queue
         consumerAmqpTemplate.convertAndSend(exchangeName, startResponseRoutingKeyName, responseMessage);
     }

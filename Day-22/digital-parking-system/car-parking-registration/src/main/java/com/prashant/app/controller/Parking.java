@@ -18,6 +18,7 @@ public class Parking {
     @PostMapping("/start")
     public String parkingStart(@RequestBody Car car, @RequestParam String parkingNumber) {
         logger.info("car parking start request received {}", car.toString());
+
         return parkingService.parkingStartService(car, parkingNumber);
     }
 
